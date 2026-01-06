@@ -1,31 +1,31 @@
-defmodule Bech32.MixProject do
+defmodule Bechamel.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :bech32,
+      app: :bechamel,
       version: "1.0.0",
       elixir: "~> 1.15",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
-      name: "Bech32",
-      source_url: "https://github.com/f2pool/bech32-elixir",
+      name: "Bechamel",
+      source_url: "https://github.com/jurraca/bechamel",
       deps: deps()
     ]
   end
 
   defp description() do
-    "This is an implementation of BIP-0173 or bech32. It also supports Nervos CKB."
+    "This is an implementation of BIP-0173 or bech32. A fork of bech32-elixir."
   end
 
   defp package() do
     [
-      name: "bech32",
+      name: "bechamel",
       files: ~w(lib .formatter.exs mix.exs README* LICENSE* CHANGELOG*),
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/f2pool/bech32-elixir"}
+      links: %{"GitHub" => "https://github.com/jurraca/bechamel"}
     ]
   end
 

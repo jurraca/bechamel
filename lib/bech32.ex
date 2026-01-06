@@ -1,4 +1,4 @@
-defmodule Bech32 do
+defmodule Bechamel do
   @moduledoc """
   This is an implementation of BIP-0173
 
@@ -102,7 +102,7 @@ defmodule Bech32 do
     Returns `:ok` or an `{:error, reason}` tuple.
 
     ## Example
-      iex> Bech32.verify("ckb1qyqdmeuqrsrnm7e5vnrmruzmsp4m9wacf6vsxasryq")
+      iex> Bechamel.verify("ckb1qyqdmeuqrsrnm7e5vnrmruzmsp4m9wacf6vsxasryq")
       :ok
   """
   @spec verify(String.t()) ::
@@ -124,7 +124,7 @@ defmodule Bech32 do
     Returns `true` or `false`.
 
     ## Example
-      iex> Bech32.valid_predicate?("ckb1qyqdmeuqrsrnm7e5vnrmruzmsp4m9wacf6vsxasryq")
+      iex> Bechamel.valid_predicate?("ckb1qyqdmeuqrsrnm7e5vnrmruzmsp4m9wacf6vsxasryq")
       true
   """
   @spec valid_predicate?(any()) :: boolean
@@ -144,7 +144,7 @@ defmodule Bech32 do
     Returns `{:ok, hrp :: String.t()}` or an `{:error, reason}` tuple.
 
     ## Example
-      iex> Bech32.get_hrp("ckb1qyqdmeuqrsrnm7e5vnrmruzmsp4m9wacf6vsxasryq")
+      iex> Bechamel.get_hrp("ckb1qyqdmeuqrsrnm7e5vnrmruzmsp4m9wacf6vsxasryq")
       {:ok, "ckb"}
 
   """
@@ -162,7 +162,7 @@ defmodule Bech32 do
     Returns a binary that represents the checksum.
 
     ## Example
-      iex> Bech32.create_checksum("ckb", <<1, 0, 221, 231, 128, 28, 7, 61, 251, 52, 100, 199, 177, 240, 91, 128, 107, 178, 187, 184, 78, 153>>)
+      iex> Bechamel.create_checksum("ckb", <<1, 0, 221, 231, 128, 28, 7, 61, 251, 52, 100, 199, 177, 240, 91, 128, 107, 178, 187, 184, 78, 153>>)
       <<4, 5, 2, 7, 25, 10>>
   """
   @spec create_checksum(String.t(), binary) :: binary
@@ -179,7 +179,7 @@ defmodule Bech32 do
     Returns a bech32 address as a string.
 
     ## Example
-      iex> Bech32.encode("ckb", <<1, 0, 221, 231, 128, 28, 7, 61, 251, 52, 100, 199, 177, 240, 91, 128, 107, 178, 187, 184, 78, 153>>)
+      iex> Bechamel.encode("ckb", <<1, 0, 221, 231, 128, 28, 7, 61, 251, 52, 100, 199, 177, 240, 91, 128, 107, 178, 187, 184, 78, 153>>)
       "ckb1qyqdmeuqrsrnm7e5vnrmruzmsp4m9wacf6vsxasryq"
   """
   @spec encode(String.t(), binary) :: String.t()
@@ -193,7 +193,7 @@ defmodule Bech32 do
     Returns a bech32 address as a string.
 
     ## Example
-      iex> Bech32.encode_from_5bit("ckb", Bech32.convertbits(<<1, 0, 221, 231, 128, 28, 7, 61, 251, 52, 100, 199, 177, 240, 91, 128, 107, 178, 187, 184, 78, 153>>))
+      iex> Bechamel.encode_from_5bit("ckb", Bechamel.convertbits(<<1, 0, 221, 231, 128, 28, 7, 61, 251, 52, 100, 199, 177, 240, 91, 128, 107, 178, 187, 184, 78, 153>>))
       "ckb1qyqdmeuqrsrnm7e5vnrmruzmsp4m9wacf6vsxasryq"
   """
   @spec encode_from_5bit(String.t(), binary) :: String.t()
@@ -211,7 +211,7 @@ defmodule Bech32 do
     Returns a binary that uses 5 bits per byte.
 
     ## Example
-      iex> Bech32.convertbits(<<1, 0, 221, 231, 128, 28, 7, 61, 251, 52, 100, 199, 177, 240, 91, 128, 107, 178, 187, 184, 78, 153>>)
+      iex> Bechamel.convertbits(<<1, 0, 221, 231, 128, 28, 7, 61, 251, 52, 100, 199, 177, 240, 91, 128, 107, 178, 187, 184, 78, 153>>)
       <<0, 4, 0, 13, 27, 25, 28, 0, 3, 16, 3, 19, 27, 30, 25, 20, 12, 19, 3, 27, 3, 28, 2, 27, 16, 1, 21, 27, 5, 14, 29, 24, 9, 26, 12, 16>>
   """
   @spec convertbits(binary, pos_integer, pos_integer, boolean) :: binary
@@ -263,7 +263,7 @@ defmodule Bech32 do
     Returns a bech32 address as a string.
 
     ## Example
-      iex> Bech32.segwit_encode("bc", 0, <<167, 63, 70, 122, 93, 154, 138, 11, 103, 41, 15, 251, 14, 239, 131, 2, 30, 176, 138, 212>>)
+      iex> Bechamel.segwit_encode("bc", 0, <<167, 63, 70, 122, 93, 154, 138, 11, 103, 41, 15, 251, 14, 239, 131, 2, 30, 176, 138, 212>>)
       "bc1q5ul5v7jan29qkeefplasamurqg0tpzk5ljjhm6"
   """
   @spec segwit_encode(String.t(), non_neg_integer, binary) :: String.t()
@@ -281,7 +281,7 @@ defmodule Bech32 do
     byte here not 5 bits per byte.
 
     ## Example
-      iex> Bech32.decode("ckb1qyq036wytncnfv0ekfjqrch7s5hzr4hkjl4qs54f7e")
+      iex> Bechamel.decode("ckb1qyq036wytncnfv0ekfjqrch7s5hzr4hkjl4qs54f7e")
       {:ok, "ckb", <<1, 0, 248, 233, 196, 92, 241, 52, 177, 249, 178, 100, 1, 226, 254, 133, 46, 33, 214, 246, 151, 234>>}
 
   """
@@ -371,7 +371,7 @@ defmodule Bech32 do
     byte here not 5 bits per byte.
 
     ## Example
-      iex> Bech32.segwit_decode("bc", "bc1q5ul5v7jan29qkeefplasamurqg0tpzk5ljjhm6")
+      iex> Bechamel.segwit_decode("bc", "bc1q5ul5v7jan29qkeefplasamurqg0tpzk5ljjhm6")
       {:ok, 0, <<167, 63, 70, 122, 93, 154, 138, 11, 103, 41, 15, 251, 14, 239, 131, 2, 30, 176, 138, 212>>}
 
   """
