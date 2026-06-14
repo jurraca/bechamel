@@ -231,7 +231,7 @@ defmodule Bechamel do
         data
       end
 
-    :erlang.list_to_binary(for <<x::size(tobits) <- data>>, do: x)
+    :erlang.list_to_binary(for <<x::size(^tobits) <- data>>, do: x)
   end
 
   def convertbits(data, frombits, tobits, pad)
@@ -254,7 +254,7 @@ defmodule Bechamel do
         data
       end
 
-    for(<<c::size(tobits) <- data>>, do: c) |> :erlang.list_to_binary()
+    for(<<c::size(^tobits) <- data>>, do: c) |> :erlang.list_to_binary()
   end
 
   @doc ~S"""
@@ -324,14 +324,14 @@ defmodule Bechamel do
                 {:error, :not_in_charset}
 
               true ->
-                <<hrp::binary-size(last_one_pos), "1", data_with_checksum::binary>> = addr
+                <<hrp::binary-size(^last_one_pos), "1", data_with_checksum::binary>> = addr
 
                 case verify_checksum(hrp, data_with_checksum) do
                   :ok ->
                     checksum_bits = 6 * 8
                     data_bits = bit_size(data_with_checksum) - checksum_bits
 
-                    <<data::bitstring-size(data_bits), _checksum::size(checksum_bits)>> =
+                    <<data::bitstring-size(^data_bits), _checksum::size(^checksum_bits)>> =
                       data_with_checksum
 
                     data =
@@ -432,7 +432,7 @@ defmodule Bechamel do
 
       n when n < 5 ->
         data_bitlen = data_bytes * 8
-        <<data::bitstring-size(data_bitlen), _::bitstring>> = data
+        <<data::bitstring-size(^data_bitlen), _::bitstring>> = data
         data
 
       n ->
